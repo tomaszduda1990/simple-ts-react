@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-
-function App() {
+import Counter from './components/Counter';
+import WithError from './components/hoc/WithError';
+import InputField from './components/InputField'
+function App(props: any) {
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    if(count === 5) {
+      props.setAlert(true)
+    }
+  }, [count])
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <form>
+          <InputField handleChange={(e) => { console.log(e.currentTarget)}} type='text' placeholder='enter some text' />
+          <InputField handleChange={(e) => { console.log(e.currentTarget.value)}} type="password" placeholder='enter password' />
+        </form>
+        <Counter >
+          {() => ( <div>
+            <code>{count}</code>
+            <button onClick={() => setCount(count + 1)}>+</button>
+          </div>)}
+        </Counter>
       </header>
     </div>
   );
 }
 
-export default App;
+export default WithError({component: App});
