@@ -8,7 +8,7 @@ function App(props: any) {
   useEffect(() => {
     if(count === 5) {
       props.setAlert(true)
-    }
+    } 
   }, [count])
   return (
     <div className="App">
